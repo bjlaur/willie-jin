@@ -18,6 +18,10 @@ def setup(bot):
 @priority('low')
 def collectlines(bot, trigger):
     """Create a temporary log of what people say"""
+
+    if trigger.is_privmsg:
+        return
+
     numlines = 50 #TODO: Config
     owner = 'Byan' #TODO: We shouldn't need to hardcode this
     people = ['jin', 'common'] + [owner] + ['QUIET']
@@ -44,13 +48,14 @@ def collectlines(bot, trigger):
             else:
                 count[x] = count[x] + 1
     
+    print(count)
+
     if 'QUIET' in count:
         return
 
     if len(tmplines) < numlines:
         return
 
-    print(count)
     if count[owner]/numlines <= threshold:
         return
 
