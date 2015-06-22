@@ -44,7 +44,7 @@ def collectlines(bot, trigger):
     for x in tmplines:
         if x in people:
             if x not in count.keys():
-                count[x] = 0
+                count[x] = 1
             else:
                 count[x] = count[x] + 1
     
