@@ -56,7 +56,7 @@ def collectlines(bot, trigger):
     if len(tmplines) < numlines:
         return
 
-    if count[owner]/numlines <= threshold:
+    if owner not in count.keys() or count[owner]/numlines <= threshold:
         return
 
     del count[owner]
