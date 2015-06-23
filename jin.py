@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import re
 from willie.tools import Identifier, WillieMemory
-from willie.module import rule, priority
+from willie.module import rule, priority, commands
 from willie.formatting import bold
 
 
@@ -22,10 +22,11 @@ def collectlines(bot, trigger):
     if trigger.is_privmsg:
         return
 
-    numlines = 50 #TODO: Config
+    numlines = 75 #TODO: Config
     owner = 'Byan' #TODO: We shouldn't need to hardcode this
-    people = ['jin', 'common'] + [owner] + ['QUIET']
-    threshold = .33
+    quiet = ('QUIET',)
+    people = ['jin', 'common', 'tm512'] + [owner] + [quiet]
+    threshold = .28
     
     if 'lines' not in bot.memory['jin_memory']:
         bot.memory['jin_memory']['lines'] = list()
@@ -42,15 +43,17 @@ def collectlines(bot, trigger):
     count = dict()
 
     for x in tmplines:
-        if x in people:
+#if x in people:
+        if True:
             if x not in count.keys():
                 count[x] = 1
             else:
                 count[x] = count[x] + 1
     
+    bot.memory['jin_memory']['count'] = count
     print(count)
 
-    if 'QUIET' in count:
+    if quiet in count:
         return
 
     if len(tmplines) < numlines:
@@ -62,6 +65,8 @@ def collectlines(bot, trigger):
     del count[owner]
 
     for dick in count.keys():
+        if dick not in people:
+            continue
         if count[dick]/numlines > threshold:
             bot.notice("You might be talking to %s too much" % dick, owner)
             tmplines.append('QUIET')
@@ -70,3 +75,7 @@ def collectlines(bot, trigger):
     bot.memory['jin_memory']['lines'] = tmplines
 
 
+
+@commands('metrics', 'm')
+def metrics(bot, trigger):
+    bot.reply(bot.memory['jin_memory']['count'])
