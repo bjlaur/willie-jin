@@ -52,7 +52,6 @@ def collectlines(bot, trigger):
     
     bot.memory['jin_memory']['count'] = count
     print(count)
-    print(people)
 
     if quiet in count:
         return
