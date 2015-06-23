@@ -22,7 +22,7 @@ def collectlines(bot, trigger):
     if trigger.is_privmsg:
         return
 
-    numlines = 75 #TODO: Config
+    numlines = 10 #TODO: Config
     owner = 'Byan' #TODO: We shouldn't need to hardcode this
     quiet = ('QUIET',)
     people = ['jin', 'common', 'tm512'] + [owner] + [quiet]
@@ -52,6 +52,7 @@ def collectlines(bot, trigger):
     
     bot.memory['jin_memory']['count'] = count
     print(count)
+    print(people)
 
     if quiet in count:
         return
@@ -69,7 +70,7 @@ def collectlines(bot, trigger):
             continue
         if count[dick]/numlines > threshold:
             bot.notice("You might be talking to %s too much" % dick, owner)
-            tmplines.append('QUIET')
+            tmplines.append(quiet)
             
     
     bot.memory['jin_memory']['lines'] = tmplines
