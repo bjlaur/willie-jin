@@ -22,7 +22,7 @@ def collectlines(bot, trigger):
     if trigger.is_privmsg:
         return
 
-    numlines = 10 #TODO: Config
+    numlines = 75 #TODO: Config
     owner = 'Byan' #TODO: We shouldn't need to hardcode this
     quiet = ('QUIET',)
     people = ['jin', 'common', 'tm512'] + [owner] + [quiet]
